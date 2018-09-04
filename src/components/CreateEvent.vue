@@ -45,6 +45,17 @@
     <label>Materialize Multiple Select</label>
   </div>
   </div> -->
+   <div class="row container">
+  <div class="input-field col s12">
+    <select name="levels" id="levelsSelector">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+    <label for="levels">Status</label>
+  </div>
+</div>
   
   <li>
 
@@ -86,7 +97,7 @@
                 <div class="row container">
 
                      <div class="input-field col s6 container">
-                        <input id="Address" name="Address" type="text" class="validate" v-model="address" />
+                        <input id="Address" name="Address" type="text" class="validate" v-model="contacts.address" />
                          <label for="Address">Address</label>
                     </div>
 
@@ -137,7 +148,7 @@
 
         </ul>
 
-        <li>
+        <!-- <li>
           <div class="row">
   <div class="input-field">
     <select name="status" id="selectedTest">
@@ -148,7 +159,7 @@
     <label for="status">Status</label>
   </div>
 </div>
-        </li>
+        </li> -->
         
     </div>
     
@@ -156,6 +167,7 @@
 
 <script>
 import db from "./firebaseInit";
+import firebase from "firebase/app";
 
 export default {
   data() {
@@ -209,21 +221,18 @@ export default {
       db.collection("events_test").add({
         name: this.name,
         cost: +this.cost,
-        description: +this.description,
+        description: this.description,
         requiredLevel: this.requiredLevel,
         headerImage: this.headerImage,
         organizer: this.organizer,
         schoolThumbUrl: this.schoolThumbUrl,
-        contacts: {
+        
+       contacts: {
           address: this.address,
-          guide: this.guide,
-        //   location: {
-        //     latitude: 51.35,
-        //     longitude: 31.35
-        //   },
-        location: new admin.firestore.GeoPoint(51.435454, 31.445456),
-        phone: this.phone
-        },
+         guide: this.guide,
+          location: new firebase.firestore.GeoPoint(51.435454, 31.445456),
+       phone: this.phone
+       },
         originalUrl: this.originalUrl,
         createdAt: new Date(),
         updatedAt: new Date()
